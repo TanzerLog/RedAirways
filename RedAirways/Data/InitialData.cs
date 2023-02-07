@@ -25,6 +25,9 @@ namespace RedAirways.Data
 
             new Flight(Plane.Planes[0], new DateTime(2023, 03, 01, 9, 00, 0), new DateTime(2023, 03, 01, 12, 00, 0), Sydney, Melbourne);
             new Flight(Plane.Planes[1], new DateTime(2023, 03, 01, 10, 00, 0), new DateTime(2023, 03, 01, 13, 00, 0), Melbourne, Sydney);
+            new Flight(Plane.Planes[2], new DateTime(2023, 03, 06, 7, 00, 0), new DateTime(2023, 03, 06, 14, 00, 0), Hobart, Perth);
+            new Flight(Plane.Planes[0], new DateTime(2023, 03, 02, 9, 00, 0), new DateTime(2023, 03, 02, 12, 00, 0), Melbourne, Brisbane);
+            new Flight(Plane.Planes[1], new DateTime(2023, 03, 02, 10, 00, 0), new DateTime(2023, 03, 02, 13, 00, 0), Sydney, Adelaide);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using RedAirways.Model;
+﻿using RedAirways.Model;
 using RedAirways.Data;
 
 class Program
@@ -207,13 +206,13 @@ class Program
 
                 case "airportMenu":
                     Console.WriteLine();
-                    Console.WriteLine("To view a list of existing airports, enter 'A'. To add a new airport, enter 'B',");
-                    Console.WriteLine("to return to the admin menu, enter 'C'.");
+                    Console.WriteLine("To view a list of existing airports enter 'A', to add a new airport enter 'B' or to return to the admin menu, enter 'C'.");
                     input = Console.ReadLine();
                     switch (input)
                     {
                         case "A":
                         case "a":
+                            Console.WriteLine();
                             Airport.PrintAirports();
                             break;
                         case "B":
@@ -229,7 +228,101 @@ class Program
                             break;
                     }
                     break;
-            }
+
+                case "addAirport":
+                    Console.WriteLine();
+                    Console.WriteLine("Please enter the name of the airport you would like to add or enter no input to back out:");
+                    input = Console.ReadLine();
+                    if (input != null)
+                    {
+                        bool match = false;
+                        foreach (Airport airport in Airport.Airports)
+                        {
+                            if (airport.Name == input)
+                            {
+                                match = true;
+                            }
+                        }
+                        if (!match)
+                        {
+                            new Airport(input);
+                            Console.WriteLine($"{input} has been added to the list of airports.");
+                            state = "airportMenu";
+                            break;
+                        } else
+                        {
+                            Console.WriteLine("An airport with that name already exists.");
+                            state = "airportMenu";
+                            break;
+                        }
+                    }
+                    break;
+
+                case "planeMenu":
+                    Console.WriteLine();
+                    Console.WriteLine("To view a list of all existing planes enter 'A', to add a new plane enter 'B', or to return to the admin menu enter 'C'");
+                    input = Console.ReadLine();
+                    switch (input)
+                    {
+                        case "A":
+                        case "a":
+                            Console.WriteLine();
+                            Plane.PrintPlanes();
+                            break;
+                        case "B":
+                        case "b":
+                            Console.WriteLine();
+                            Console.WriteLine("Enter the unique serial for the new plane:");
+                            string serial = Console.ReadLine();
+                            if (serial == null)
+                            {
+                                Console.WriteLine("You must enter a value, try again.");
+                                break;
+                            } else if (Plane.CheckSerial(serial))
+                            {
+                                Console.WriteLine("You must enter a unique serial");
+                                break;
+                            }
+                            Console.WriteLine();
+                            Console.WriteLine("Enter the model of the plane:");
+                            string model = Console.ReadLine();
+                            if (model == null)
+                            {
+                                Console.WriteLine("You must enter a value, try again.");
+                                break;
+                            }
+                            Console.WriteLine();
+                            Console.WriteLine("Enter the number of seats as an integer:");
+                            input = Console.ReadLine();
+                            if (input == null)
+                            {
+                                Console.WriteLine("You must enter a value, try again.");
+                                break;
+                            }
+                            else if (!int.TryParse(input, out result))
+                            {
+                                Console.WriteLine("You must enter an integer value, try again.");
+                                break;
+                            }
+                            else
+                            {
+                                Plane plane = new Plane(serial, model, result);
+                                Console.WriteLine();
+                                Console.WriteLine($"The following plane was added:");
+                                Console.WriteLine($"Serial: {plane.Serial}  Model: {plane.Model}  Number of Seats: {plane.Seats.Count}");
+                                break;
+                            }
+                        case "C":
+                        case "c":
+                            state = "admin";
+                            break;
+                        default:
+                            Console.WriteLine("Invalid input, please try again.");
+                            break;
+                    }
+                    break;
+            }       
+
         }
     }
 }

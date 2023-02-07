@@ -35,5 +35,26 @@ namespace RedAirways.Model
                 Planes.Add(this);
             }
         }
+
+        public static void PrintPlanes()
+        {
+            foreach (Plane plane in Planes)
+            {
+                Console.WriteLine($"{plane.Serial}, a {plane.Model} with {plane.Seats.Count} seats");
+            }
+        }
+
+        public static bool CheckSerial(string serial)
+        {
+            bool match = false;
+            foreach (Plane plane in Planes)
+            {
+                if (serial == plane.Serial)
+                {
+                    match = true;
+                }
+            }
+            return match;
+        }
     }
 }
