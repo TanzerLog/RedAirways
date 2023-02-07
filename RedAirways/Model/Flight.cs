@@ -47,14 +47,13 @@ namespace RedAirways.Model
         //Prints a list of all available seats in plane format, leaving blank spaces for already occupied seats
         public void PrintSeats()
         {
-            int i = 0;
-            int x = 0;
+            int i = 1;
             foreach (Seat seat in Plane.Seats)
             {
-                if (i == 0)
+                if (i % 6 == 1)
                 {
                     Console.WriteLine();
-                } else if (i == 3)
+                } else if (i % 6 == 4)
                 {
                     Console.Write("   ");
                 }
@@ -64,19 +63,16 @@ namespace RedAirways.Model
                 } else
                 {
                     Console.Write("   ");
+                    if (i > 9)
+                    {
+                        Console.Write(" ");
+                    }
                 }
-                if (x < 9)
+                if (i < 10)
                 {
                     Console.Write(" ");
-                    x++;
                 }
-                if (i < 5)
-                {
-                    i++;
-                } else
-                {
-                    i = 0;
-                }
+                i++;
             }
         }
 

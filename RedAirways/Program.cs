@@ -175,7 +175,60 @@ class Program
                     }
                     break;
 
+                case "admin":
+                    Console.WriteLine();
+                    Console.WriteLine("Welcome to the Admin menu. As the login system is not implemented, we are using an honour system.");
+                    Console.WriteLine("Please enter 'A' to add a new airport, 'B' to add a new plane, 'C' to add a new flight or 'D' to return to the navigation menu.");
+                    Console.WriteLine("You will be able to list all existing instances of each class in their relevant menu.");
+                    input = Console.ReadLine();
+                    switch (input)
+                    {
+                        case "A":
+                        case "a":
+                            state = "airportMenu";
+                            break;
+                        case "B":
+                        case "b":
+                            state = "planeMenu";
+                            break;
+                        case "C":
+                        case "c":
+                            state = "flightMenu";
+                            break;
+                        case "D":
+                        case "d":
+                            state = "start";
+                            break;
+                        default:
+                            Console.WriteLine("Invalid input, please try again.");
+                            break;
+                    }
+                    break;
 
+                case "airportMenu":
+                    Console.WriteLine();
+                    Console.WriteLine("To view a list of existing airports, enter 'A'. To add a new airport, enter 'B',");
+                    Console.WriteLine("to return to the admin menu, enter 'C'.");
+                    input = Console.ReadLine();
+                    switch (input)
+                    {
+                        case "A":
+                        case "a":
+                            Airport.PrintAirports();
+                            break;
+                        case "B":
+                        case "b":
+                            state = "addAirport";
+                            break;
+                        case "C":
+                        case "c":
+                            state = "admin";
+                            break;
+                        default:
+                            Console.WriteLine("Invalid input, please try again.");
+                            break;
+                    }
+                    break;
             }
         }
     }

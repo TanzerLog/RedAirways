@@ -16,5 +16,12 @@ namespace RedAirways.Model
             Airports.Add(this);
         }
 
+        public static void PrintAirports()
+        {
+            foreach (Airport airport in Airports)
+            {
+                Console.WriteLine(airport.Name);
+            }
+        }
     }
 }
