@@ -1,5 +1,6 @@
 ﻿using RedAirways.Model;
 using RedAirways.Data;
+using System.Globalization;
 
 class Program
 {
@@ -260,7 +261,7 @@ class Program
 
                 case "planeMenu":
                     Console.WriteLine();
-                    Console.WriteLine("To view a list of all existing planes enter 'A', to add a new plane enter 'B', or to return to the admin menu enter 'C'");
+                    Console.WriteLine("To view a list of all existing planes enter 'A', to add a new plane enter 'B', or to return to the admin menu enter 'C'.");
                     input = Console.ReadLine();
                     switch (input)
                     {
@@ -310,6 +311,111 @@ class Program
                                 Console.WriteLine();
                                 Console.WriteLine($"The following plane was added:");
                                 Console.WriteLine($"Serial: {plane.Serial}  Model: {plane.Model}  Number of Seats: {plane.Seats.Count}");
+                                break;
+                            }
+                        case "C":
+                        case "c":
+                            state = "admin";
+                            break;
+                        default:
+                            Console.WriteLine("Invalid input, please try again.");
+                            break;
+                    }
+                    break;
+
+                case "flightMenu":
+                    Console.WriteLine();
+                    Console.WriteLine("To view a list of all existing flights enter 'A', to add a new flight enter 'B', or to return to the admin menu enter 'C'.");
+                    input = Console.ReadLine();
+                    switch (input)
+                    {
+                        case "A":
+                        case "a":
+                            Flight.PrintAllFlights();
+                            break;
+
+                        case "B":
+                        case "b":
+                            Console.WriteLine("You will now be asked to make a series of choices, being shown the options available when relevant. A new flight cannot start and end at the same airport, and the flight time period cannot overlap with an existing flight for the selected plane.");
+                            Console.WriteLine("Please select a plane from this list by entering the initial integer for that plane (e.g 1 not one):");
+                            Plane.PrintPlanes();
+                            input = Console.ReadLine();
+                            if (!int.TryParse(input, out result))
+                            {
+                                Console.WriteLine("You must enter an integer value matching one of the listed planes, try again.");
+                                break;
+                            } else if (result < 1 || result > Plane.Planes.Count)
+                            {
+                                Console.WriteLine("You must choose from one of the listed planes, try again.");
+                                break;
+                            }
+                            Plane plane = Plane.Planes[result - 1];
+                            Console.WriteLine();
+                            DateTime departure;
+                            try
+                            {
+                                Console.WriteLine("Enter a departure date and time in the format 'yyyy-MM-dd HH:mm:ss':");
+                                input = Console.ReadLine();
+                                departure = DateTime.ParseExact(input, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                            }
+                            catch (FormatException ex)
+                            {
+                                Console.WriteLine("Invalid format. Please enter a valid date and time.");
+                                break;
+                            }
+                            DateTime arrival;
+                            try
+                            {
+                                Console.WriteLine("Enter an arrival date and time in the format 'yyyy-MM-dd HH:mm:ss':");
+                                input = Console.ReadLine();
+                                arrival = DateTime.ParseExact(input, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                            }
+                            catch (FormatException ex)
+                            {
+                                Console.WriteLine("Invalid format. Please enter a valid date and time.");
+                                break;
+                            }
+                            Console.WriteLine();
+                            Console.WriteLine("Please select a departure airport using its listed integer value (e.g 1 not one):");
+                            Airport.PrintAirports();
+                            input = Console.ReadLine();
+                            if (!int.TryParse(input, out result))
+                            {
+                                Console.WriteLine("You must enter an integer value matching one of the listed airports, try again.");
+                                break;
+                            }
+                            else if (result < 1 || result > Airport.Airports.Count)
+                            {
+                                Console.WriteLine("You must choose from one of the listed airports, try again.");
+                                break;
+                            }
+                            Airport departureAirport = Airport.Airports[result - 1];
+                            Console.WriteLine();
+                            Console.WriteLine("Please select an arrival airport using its listed integer value (e.g 1 not one), ensuring it is not the same airport as the departure airport:");
+                            Airport.PrintAirports();
+                            input = Console.ReadLine();
+                            if (!int.TryParse(input, out result))
+                            {
+                                Console.WriteLine("You must enter an integer value matching one of the listed airports, try again.");
+                                break;
+                            }
+                            else if (result < 1 || result > Airport.Airports.Count)
+                            {
+                                Console.WriteLine("You must choose from one of the listed airports, try again.");
+                                break;
+                            }
+                            Airport arrivalAirport = Airport.Airports[result - 1];
+                            try
+                            {
+                                Flight newFlight = new Flight(plane, departure, arrival, departureAirport, arrivalAirport);
+                                Console.WriteLine("You have created the following flight:");
+                                newFlight.PrintFlight();
+                                break;
+                            }
+                            catch (ArgumentException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                                Console.Write("Please try again.");
                                 break;
                             }
                         case "C":

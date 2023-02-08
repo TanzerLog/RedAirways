@@ -38,9 +38,21 @@ namespace RedAirways.Model
 
         public static void PrintPlanes()
         {
+            int i = 1;
             foreach (Plane plane in Planes)
+            {   
+                Console.WriteLine($"{i}: {plane.Serial}, a {plane.Model} with {plane.Seats.Count} seats");
+                i++;
+            }
+        }
+
+        public void PrintPlaneFlights()
+        {
+            int i = 1;
+            foreach (Flight flight in Flights)
             {
-                Console.WriteLine($"{plane.Serial}, a {plane.Model} with {plane.Seats.Count} seats");
+                Console.WriteLine($"{i}: {flight.Plane.Serial} ({flight.Plane.Model}) departing {flight.DepartureAirport.Name} at {flight.Departure} and arriving at {flight.ArrivalAirport.Name} at {flight.Arrival}");
+                i++;
             }
         }
 

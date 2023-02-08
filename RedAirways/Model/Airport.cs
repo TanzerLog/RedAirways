@@ -18,10 +18,13 @@ namespace RedAirways.Model
 
         public static void PrintAirports()
         {
+            int i = 1;
             foreach (Airport airport in Airports)
             {
                 Console.WriteLine(airport.Name);
+                i++;
             }
         }
+
     }
 }

@@ -18,6 +18,19 @@ namespace RedAirways.Model
 
         public Flight(Plane plane, DateTime departure, DateTime arrival, Airport departureAirport, Airport arrivalAirport)
         {
+            foreach (Flight flight in plane.Flights)
+            {
+                if (departure < flight.Arrival && flight.Departure < arrival)
+                {
+                    throw new ArgumentException("Flight times for a single plane cannot overlap.");
+                }
+            }
+
+            if (departureAirport == arrivalAirport)
+            {
+                throw new ArgumentException("A flight cannot begin and end at the same airport.");
+            }
+
             Plane = plane;
             Departure = departure;
             Arrival = arrival;
